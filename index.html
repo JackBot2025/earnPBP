@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Earn PBP – PictureBot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <title>Earn PBP | PictureBot Rewards</title>
+  <meta name="description" content="Earn PBP by completing daily tasks and offers. Redeem rewards in the Telegram PictureBot." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: #1e1f2a;
-      color: #fff;
       margin: 0;
       padding: 0;
+      background: #0e0e14;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -22,81 +23,81 @@
       padding: 2rem 1rem 1rem;
     }
     header h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
+      color: #00c897;
     }
     header p {
       font-size: 1rem;
-      color: #aaa;
-    }
-    main {
-      width: 100%;
-      max-width: 420px;
-      padding: 1rem;
+      opacity: 0.85;
     }
     .card {
-      background: #2b2e3c;
+      background: #1c1c2b;
       padding: 1.5rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      margin: 1rem;
+      max-width: 400px;
+      width: 90%;
     }
     button {
       width: 100%;
+      padding: 1rem;
       background: #00c897;
       border: none;
-      padding: 1rem;
       border-radius: 0.75rem;
-      font-size: 1rem;
+      color: #fff;
       font-weight: 600;
-      color: white;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s;
     }
     button:disabled {
       background: gray;
       cursor: not-allowed;
     }
-    .small-text {
-      font-size: 0.85rem;
+    #status {
+      font-size: 0.9rem;
       text-align: center;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       color: #aaa;
     }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 0.75rem;
+      margin-top: 1rem;
+    }
     footer {
-      padding: 1rem;
+      padding: 2rem 1rem 1rem;
       text-align: center;
       font-size: 0.75rem;
-      color: #555;
+      opacity: 0.6;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🪙 Earn PBP</h1>
-    <p>Visit daily and earn up to <strong>5 PBP</strong> for free!</p>
+    <h1>Earn PBP</h1>
+    <p>Claim free PBP daily & unlock premium features in the Telegram PictureBot</p>
   </header>
-  <main>
-    <div class="card">
-      <p><strong>Daily reward:</strong></p>
-      <p id="streak">Streak: 0 days</p>
-      <button id="claimBtn">🎁 Claim now</button>
-      <p class="small-text" id="status"></p>
-    </div>
 
-    <div class="card">
-      <p><strong>💰 Earn even more:</strong></p>
-      <p>Complete offers and surveys to earn extra PBP.</p>
-      <div id="offerwalls">
-        <!-- Example: Monlix iframe -->
-        <!--
-        <iframe src="https://example.com/offerwall?uid=..." style="width:100%;height:500px;border:none;"></iframe>
-        -->
-      </div>
-    </div>
-  </main>
+  <div class="card">
+    <h2>🎁 Daily Claim</h2>
+    <p>Get 1–5 PBP every day. Come back daily to increase your streak!</p>
+    <p id="streak">Streak: 0 days</p>
+    <button id="claimBtn">✅ Claim Daily PBP</button>
+    <p id="status"></p>
+  </div>
+
+  <div class="card">
+    <h2>💼 Complete Offers</h2>
+    <p>Earn more PBP by completing surveys and tasks below:</p>
+    <iframe src="https://example.com/your-offerwall" title="Offerwall loading..."></iframe>
+    <!-- Replace this iframe with actual Adgem or Lootably iframe -->
+  </div>
 
   <footer>
-    &copy; 2025 PictureBot • Powered by Telegram
+    &copy; 2025 PictureBot. Rewards are only valid for linked Telegram users.
   </footer>
 
   <script>
@@ -111,18 +112,18 @@
 
     if (lastClaim === today) {
       claimBtn.disabled = true;
-      statusText.textContent = "You've already claimed your reward today.";
+      statusText.textContent = "✅ You already claimed today's reward.";
     }
 
-    streakText.textContent = `Streak: ${streak} day${streak !== 1 ? 's' : ''}`;
+    streakText.textContent = `Streak: ${streak} days`;
 
     claimBtn.addEventListener("click", () => {
       if (!uid) {
-        alert("Missing Telegram UID. Please open this page via the bot.");
+        alert("Missing UID. Please access this page via Telegram bot.");
         return;
       }
 
-      let reward = Math.min(streak + 1, 5);
+      const reward = Math.min(streak + 1, 5); // max 5 PBP
 
       fetch("https://picturebot-bwgn.onrender.com/claim_pbp", {
         method: "POST",
@@ -135,10 +136,10 @@
         localStorage.setItem("lastClaim", today);
         localStorage.setItem("streak", streak + 1);
         streakText.textContent = `Streak: ${streak + 1} days`;
-        statusText.textContent = `✅ ${reward} PBP added to your account.`;
+        statusText.textContent = `✅ You earned ${reward} PBP.`;
       })
       .catch(() => {
-        alert("Error connecting to bot server.");
+        alert("⚠️ Error connecting to the server.");
       });
     });
   </script>
