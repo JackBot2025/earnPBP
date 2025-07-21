@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta name="bitmedia-site-verification" content="9fb3f0a17be44fb27a3b7586183df838" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PBP verdienen | PictureBot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <meta name="bitmedia-site-verification" content="9fb3f0a17be44fb27a3b7586183df838" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Earn PBP – PictureBot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(145deg, #1f1f2b, #2c2c3b);
+      background: #1e1f2a;
       color: #fff;
       margin: 0;
       padding: 0;
@@ -20,27 +18,26 @@
       min-height: 100vh;
     }
     header {
-      padding: 2rem 1rem 1rem;
       text-align: center;
+      padding: 2rem 1rem 1rem;
     }
     header h1 {
       font-size: 2rem;
-      margin-bottom: 0.5rem;
     }
     header p {
       font-size: 1rem;
-      opacity: 0.8;
+      color: #aaa;
     }
     main {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       padding: 1rem;
     }
     .card {
-      background: #33374a;
+      background: #2b2e3c;
       padding: 1.5rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       margin-bottom: 2rem;
     }
     button {
@@ -62,38 +59,44 @@
     .small-text {
       font-size: 0.85rem;
       text-align: center;
-      margin-top: -1rem;
+      margin-top: 0.5rem;
       color: #aaa;
     }
     footer {
       padding: 1rem;
       text-align: center;
       font-size: 0.75rem;
-      color: #666;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <meta name="bitmedia-site-verification" content="9fb3f0a17be44fb27a3b7586183df838" />
   <header>
-    <h1>🪙 PBP verdienen</h1>
-    <p>Erhalte täglich bis zu <strong>10 PBP</strong> durch deinen Besuch!</p>
+    <h1>🪙 Earn PBP</h1>
+    <p>Visit daily and earn up to <strong>5 PBP</strong> for free!</p>
   </header>
   <main>
     <div class="card">
-      <p><strong>Dein täglicher Besuch:</strong></p>
-      <p id="streak">Tagesfolge: 0 Tage</p>
-      <button id="claimBtn">🎁 Jetzt PBP einsammeln</button>
+      <p><strong>Daily reward:</strong></p>
+      <p id="streak">Streak: 0 days</p>
+      <button id="claimBtn">🎁 Claim now</button>
       <p class="small-text" id="status"></p>
     </div>
+
     <div class="card">
-      <p><strong>💡 Noch mehr verdienen?</strong></p>
-      <p>Monlix & andere Partner folgen bald.</p>
-      <!-- Monlix iframe oder Link kann hier später eingebunden werden -->
+      <p><strong>💰 Earn even more:</strong></p>
+      <p>Complete offers and surveys to earn extra PBP.</p>
+      <div id="offerwalls">
+        <!-- Example: Monlix iframe -->
+        <!--
+        <iframe src="https://example.com/offerwall?uid=..." style="width:100%;height:500px;border:none;"></iframe>
+        -->
+      </div>
     </div>
   </main>
+
   <footer>
-    &copy; 2025 PictureBot | EarnPBP
+    &copy; 2025 PictureBot • Powered by Telegram
   </footer>
 
   <script>
@@ -108,18 +111,18 @@
 
     if (lastClaim === today) {
       claimBtn.disabled = true;
-      statusText.textContent = "Du hast heute bereits PBP eingesammelt.";
+      statusText.textContent = "You've already claimed your reward today.";
     }
 
-    streakText.textContent = `Tagesfolge: ${streak} Tage`;
+    streakText.textContent = `Streak: ${streak} day${streak !== 1 ? 's' : ''}`;
 
     claimBtn.addEventListener("click", () => {
       if (!uid) {
-        alert("Telegram UID fehlt in der URL. Bitte öffne diese Seite über den Bot.");
+        alert("Missing Telegram UID. Please open this page via the bot.");
         return;
       }
 
-      let reward = Math.min(streak + 1, 10);
+      let reward = Math.min(streak + 1, 5);
 
       fetch("https://picturebot-bwgn.onrender.com/claim_pbp", {
         method: "POST",
@@ -131,14 +134,13 @@
         claimBtn.disabled = true;
         localStorage.setItem("lastClaim", today);
         localStorage.setItem("streak", streak + 1);
-        streakText.textContent = `Tagesfolge: ${streak + 1} Tage`;
-        statusText.textContent = `✅ ${reward} PBP wurden deinem Account gutgeschrieben.`;
+        streakText.textContent = `Streak: ${streak + 1} days`;
+        statusText.textContent = `✅ ${reward} PBP added to your account.`;
       })
       .catch(() => {
-        alert("Fehler beim Verbinden mit dem Bot-Server.");
+        alert("Error connecting to bot server.");
       });
     });
   </script>
 </body>
 </html>
-
