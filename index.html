@@ -92,8 +92,7 @@
   <div class="card">
     <h2>💼 Complete Offers</h2>
     <p>Earn more PBP by completing surveys and tasks below:</p>
-    <iframe width="100%" frameBorder="0" height="2000px"  src="https://offers.cpx-research.com/index.php?app_id=28326&ext_user_id=${uid}&secure_hash={secure_hash}&username={user_name}&email={user_email}&subid_1=&subid_2"></iframe>
-
+    <iframe id="cpxFrame" width="100%" height="2000px" frameBorder="0"></iframe>
     <!-- Replace this iframe with actual Adgem or Lootably iframe -->
   </div>
 
@@ -143,6 +142,12 @@
         alert("⚠️ Error connecting to the server.");
       });
     });
+    const cpxIframe = document.getElementById("cpxFrame");
+
+    if (uid) {
+      const cpxUrl = `https://offers.cpx-research.com/index.php?app_id=28326&ext_user_id=${uid}`;
+      cpxIframe.src = cpxUrl;
+    }
   </script>
 </body>
 </html>
