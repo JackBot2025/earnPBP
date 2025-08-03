@@ -108,14 +108,17 @@
 
     const today = new Date().toLocaleDateString();
     const lastClaim = localStorage.getItem("lastClaim") || "";
-    let streak = parseInt(localStorage.getItem("streak") || "0");
+
+    // feste Punktezahl pro Claim
+    const dailyReward = 4;
+
+    // UI anpassen
+    streakText.textContent = `Daily reward: ${dailyReward} PBP`;
 
     if (lastClaim === today) {
       claimBtn.disabled = true;
       statusText.textContent = "✅ You already claimed today's reward.";
     }
-
-    streakText.textContent = `Streak: ${streak} days`;
 
     claimBtn.addEventListener("click", () => {
       if (!uid) {
@@ -123,31 +126,28 @@
         return;
       }
 
-      const reward = Math.min(streak + 1, 5); // max 5 PBP
-
       fetch("https://picturebot-bwgn.onrender.com/claim_pbp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: uid, points: reward })
+        body: JSON.stringify({ uid: uid, points: dailyReward })
       })
       .then(res => res.json())
       .then(data => {
         claimBtn.disabled = true;
         localStorage.setItem("lastClaim", today);
-        localStorage.setItem("streak", streak + 1);
-        streakText.textContent = `Streak: ${streak + 1} days`;
-        statusText.textContent = `✅ You earned ${reward} PBP.`;
+        statusText.textContent = `✅ You earned ${dailyReward} PBP.`;
       })
       .catch(() => {
         alert("⚠️ Error connecting to the server.");
       });
     });
-    const cpxIframe = document.getElementById("cpxFrame");
 
+    const cpxIframe = document.getElementById("cpxFrame");
     if (uid) {
       const cpxUrl = `https://offers.cpx-research.com/index.php?app_id=28326&ext_user_id=${uid}`;
       cpxIframe.src = cpxUrl;
     }
   </script>
+
 </body>
 </html>
